@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<body>
+
+<h1>OBS Browser Source</h1>
+<p><input type='text' id='text'></p>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js'></script>
+<script>
+    const socket = io();
+    window.addEventListener('load', () => {
+        socket.emit('subscribe');
+        let textInput = document.getElementById('text');
+        socket.on('update', (data) => {
+            textInput.value = data;
+        })
+        textInput.addEventListener('change', function (event) {
+            socket.emit('change', event.target.value);
+        });
+    });
+</script>
+
+</body>
+</html>
